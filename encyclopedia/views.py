@@ -1,6 +1,9 @@
 from django.shortcuts import render
+from django import forms
 from . import util
 
+class SearchQueue(forms.Form):
+    q = forms.CharField(label="New Task")
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -12,6 +15,21 @@ def content(request, title):
         "title": util.get_entry(title)
     })
 
+def add(request):
+    if request.method == 'POST':
+        form = SearchQueue(request.POST)
+        if form.is_valid():
+            q = form.cleaned_data["task"]
+            request.session["tasks"] += [task]
+            return HttpResponseRedirect(reverse("tasks:index"))
+        else:
+            return render(request, "task/add.html", {
+                "form": form
+            })
+
+    return render(request, "tasks/add.html", {
+        "form": NewTaskForm()
+    })
 
 #not working
 #def title(request, title):
