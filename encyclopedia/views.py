@@ -12,8 +12,10 @@ def content(request, title):
         "title": util.get_entry(title)
     })
 
-def title(request, title):
-    f = open(f"entries/{title}.md", "r")
-    return render(request, "encyclopedia/entry.html", {
-        "htmltitle": f.readline()
-    })
+
+#not working
+#def title(request, title):
+#    f = open(f"entries/{title}.md", "r")
+#    return render(request, "encyclopedia/entry.html", {
+#        "htmltitle": f.readline()
+#    })
